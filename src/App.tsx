@@ -53,6 +53,59 @@ function TopBar() {
   );
 }
 
+function AppSidebar() {
+  const location = useLocation();
+  return (
+    <Sidebar variant="inset" collapsible="icon">
+      <SidebarHeader className="px-3 py-4">
+        <div className="flex items-center gap-2">
+          <div className="h-2 w-2 rounded-full bg-primary shadow-[var(--shadow-glow)]" />
+          <span className="text-sm font-semibold">SmartHome AI</span>
+        </div>
+      </SidebarHeader>
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupLabel>Navigation</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild isActive={location.pathname === "/"}>
+                  <Link to="/">
+                    <Home />
+                    <span>Dashboard</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild isActive={location.pathname.startsWith("/analytics")}>
+                  <Link to="/analytics">
+                    <BarChart3 />
+                    <span>Analytics</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild isActive={location.pathname.startsWith("/settings")}>
+                  <Link to="/settings">
+                    <SettingsIcon />
+                    <span>Settings</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+      <SidebarFooter className="px-2 py-3">
+        <Button asChild variant="outline" size="sm" className="w-full">
+          <a href="https://builder.io" target="_blank" rel="noreferrer">Powered by Builder</a>
+        </Button>
+      </SidebarFooter>
+      <SidebarSeparator />
+    </Sidebar>
+  );
+}
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -60,53 +113,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <SidebarProvider>
-          <Sidebar variant="inset" collapsible="icon">
-            <SidebarHeader className="px-3 py-4">
-              <div className="flex items-center gap-2">
-                <div className="h-2 w-2 rounded-full bg-primary shadow-[var(--shadow-glow)]" />
-                <span className="text-sm font-semibold">SmartHome AI</span>
-              </div>
-            </SidebarHeader>
-            <SidebarContent>
-              <SidebarGroup>
-                <SidebarGroupLabel>Navigation</SidebarGroupLabel>
-                <SidebarGroupContent>
-                  <SidebarMenu>
-                    <SidebarMenuItem>
-                      <SidebarMenuButton asChild isActive={location.pathname === "/"}>
-                        <Link to="/">
-                          <Home />
-                          <span>Dashboard</span>
-                        </Link>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                    <SidebarMenuItem>
-                      <SidebarMenuButton asChild isActive={location.pathname.startsWith("/analytics")}>
-                        <Link to="/analytics">
-                          <BarChart3 />
-                          <span>Analytics</span>
-                        </Link>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                    <SidebarMenuItem>
-                      <SidebarMenuButton asChild isActive={location.pathname.startsWith("/settings")}>
-                        <Link to="/settings">
-                          <SettingsIcon />
-                          <span>Settings</span>
-                        </Link>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  </SidebarMenu>
-                </SidebarGroupContent>
-              </SidebarGroup>
-            </SidebarContent>
-            <SidebarFooter className="px-2 py-3">
-              <Button asChild variant="outline" size="sm" className="w-full">
-                <a href="https://builder.io" target="_blank" rel="noreferrer">Powered by Builder</a>
-              </Button>
-            </SidebarFooter>
-            <SidebarSeparator />
-          </Sidebar>
+          <AppSidebar />
           <SidebarInset>
             <TopBar />
             <div className="p-4 md:p-8">
