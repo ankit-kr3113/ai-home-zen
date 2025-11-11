@@ -26,6 +26,16 @@ export const ControlCard = ({
   onColorChange,
   disabled,
 }: ControlCardProps) => {
+  const [localColor, setLocalColor] = useState<string>(String(value || '#ffffff'));
+
+  useEffect(() => {
+    // keep local state in sync when parent updates value
+    if (typeof value === 'string' && value !== localColor) {
+      setLocalColor(value);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
+
   return (
     <Card className="group border-border/50">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
