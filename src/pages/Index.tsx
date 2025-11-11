@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useMQTT } from '@/hooks/useMQTT';
+import { useSensorLogger } from '@/hooks/useSensorLogger';
 import { SensorCard } from '@/components/SensorCard';
 import { ControlCard } from '@/components/ControlCard';
 import { ChartCard } from '@/components/ChartCard';
@@ -7,9 +8,10 @@ import { AIInsights } from '@/components/AIInsights';
 import { AlertBanner } from '@/components/AlertBanner';
 import { ConnectionStatus } from '@/components/ConnectionStatus';
 import { Button } from '@/components/ui/button';
-import { Thermometer, Droplets, Lightbulb, Fan, Palette, Cpu } from 'lucide-react';
+import { Thermometer, Droplets, Lightbulb, Fan, Palette, Cpu, Eye, BarChart3 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { Link } from 'react-router-dom';
 
 const Index = () => {
   const {
@@ -25,6 +27,9 @@ const Index = () => {
     setRGBColor,
     toggleMode,
   } = useMQTT();
+
+  // Log sensor data to database
+  useSensorLogger(sensorData, isConnected);
 
   // AI automation: periodically send sensor data for AI processing
   useEffect(() => {
@@ -90,6 +95,12 @@ const Index = () => {
           </div>
           <div className="flex items-center gap-4">
             <ConnectionStatus isConnected={isConnected} />
+            <Link to="/analytics">
+              <Button variant="outline" className="gap-2">
+                <BarChart3 className="h-4 w-4" />
+                Analytics
+              </Button>
+            </Link>
             <Button
               variant={sensorData.mode === 'AUTO' ? 'default' : 'secondary'}
               onClick={toggleMode}
@@ -106,7 +117,7 @@ const Index = () => {
         <AlertBanner alerts={alerts} />
 
         {/* Sensor Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
           <SensorCard
             title="Temperature"
             value={sensorData.temperature.toFixed(1)}
@@ -120,6 +131,12 @@ const Index = () => {
             unit="%"
             icon={Droplets}
             gradient="var(--gradient-cool)"
+          />
+          <SensorCard
+            title="Motion"
+            value={sensorData.motionState}
+            icon={Eye}
+            color={sensorData.motionState === 'DETECTED' ? 'destructive' : 'muted'}
           />
           <SensorCard
             title="Bulb"

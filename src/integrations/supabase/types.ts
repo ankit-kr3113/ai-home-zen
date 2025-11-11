@@ -14,7 +14,63 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      motion_events: {
+        Row: {
+          created_at: string
+          id: string
+          motion_state: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          motion_state: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          motion_state?: string
+        }
+        Relationships: []
+      }
+      sensor_readings: {
+        Row: {
+          bulb_state: string
+          created_at: string
+          fan_speed: number
+          fan_state: string
+          humidity: number
+          id: string
+          mode: string
+          motion_state: string
+          rgb_color: string
+          temperature: number
+        }
+        Insert: {
+          bulb_state: string
+          created_at?: string
+          fan_speed: number
+          fan_state: string
+          humidity: number
+          id?: string
+          mode: string
+          motion_state: string
+          rgb_color: string
+          temperature: number
+        }
+        Update: {
+          bulb_state?: string
+          created_at?: string
+          fan_speed?: number
+          fan_state?: string
+          humidity?: number
+          id?: string
+          mode?: string
+          motion_state?: string
+          rgb_color?: string
+          temperature?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
