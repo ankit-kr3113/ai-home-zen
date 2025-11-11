@@ -26,10 +26,12 @@ export const ControlCard = ({
   disabled,
 }: ControlCardProps) => {
   return (
-    <Card className="border-border/50 shadow-lg hover:shadow-xl transition-all duration-300">
+    <Card className="group border-border/50">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium text-muted-foreground">{title}</CardTitle>
-        <Icon className="h-4 w-4 text-primary" />
+        <CardTitle className="text-xs font-medium text-muted-foreground/80 tracking-wide">{title}</CardTitle>
+        <div className="h-7 w-7 rounded-md bg-secondary/70 border border-border/50 flex items-center justify-center">
+          <Icon className="h-4 w-4 text-primary" />
+        </div>
       </CardHeader>
       <CardContent className="space-y-4">
         {type === 'toggle' && (
@@ -65,7 +67,7 @@ export const ControlCard = ({
               value={value as string}
               onChange={(e) => onColorChange?.(e.target.value)}
               disabled={disabled}
-              className="w-full h-12 rounded-md cursor-pointer border-2 border-border hover:border-primary transition-colors"
+              className="w-full h-12 rounded-md cursor-pointer border border-border/60 bg-card/70 hover:border-primary transition-colors"
             />
             <p className="text-xs text-center text-muted-foreground font-mono">{value}</p>
           </div>
