@@ -63,14 +63,25 @@ export const ControlCard = ({
         )}
         {type === 'color' && (
           <div className="space-y-2">
-            <input
-              type="color"
-              value={value as string}
-              onChange={(e) => onColorChange?.(e.target.value)}
-              disabled={disabled}
-              className="w-full h-12 rounded-md cursor-pointer border border-border/60 bg-card/70 hover:border-primary transition-colors"
-            />
-            <p className="text-xs text-center text-muted-foreground font-mono">{value}</p>
+            <div className="flex gap-2">
+              <input
+                type="color"
+                value={String(value || '#ffffff')}
+                onChange={(e) => setLocalColor(e.target.value)}
+                disabled={disabled}
+                className="h-12 w-full rounded-md cursor-pointer border border-border/60 bg-card/70 hover:border-primary transition-colors"
+              />
+              <Button
+                onClick={() => onColorChange?.(localColor)}
+                disabled={disabled}
+                variant="gradient"
+                size="sm"
+                className="min-w-[64px]"
+              >
+                Set
+              </Button>
+            </div>
+            <p className="text-xs text-center text-muted-foreground font-mono">{localColor}</p>
           </div>
         )}
       </CardContent>
