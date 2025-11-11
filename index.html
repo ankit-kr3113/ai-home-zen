@@ -24,12 +24,6 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <script>
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/sw.js')
-          .then(() => console.log('Service Worker registered'))
-          .catch((err) => console.log('Service Worker registration failed:', err));
-      }
-    </script>
+    <!-- Service worker registration moved to main.tsx (prod only) -->
   </body>
 </html>
