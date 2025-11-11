@@ -36,6 +36,13 @@ export const ControlCard = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
+  const [localSpeed, setLocalSpeed] = useState<number>(typeof value === 'number' ? value : 0);
+
+  useEffect(() => {
+    if (typeof value === 'number' && value !== localSpeed) setLocalSpeed(value);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
+
   return (
     <Card className="group border-border/50">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -59,11 +66,12 @@ export const ControlCard = ({
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
               <span>Speed</span>
-              <span className="font-semibold">{value}%</span>
+              <span className="font-semibold">{localSpeed}%</span>
             </div>
             <Slider
-              value={[value as number]}
-              onValueChange={onSliderChange}
+              value={[localSpeed]}
+              onValueChange={(v) => setLocalSpeed(v[0])}
+              onValueCommit={(v) => onSliderChange?.(v)}
               max={100}
               step={1}
               disabled={disabled}
