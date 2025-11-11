@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
 import { LucideIcon } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 interface ControlCardProps {
   title: string;
