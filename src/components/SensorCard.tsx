@@ -19,15 +19,17 @@ export const SensorCard = ({ title, value, unit, icon: Icon, gradient, color }: 
   };
 
   return (
-    <Card className="border-border/50 shadow-lg hover:shadow-xl transition-all duration-300">
+    <Card className="group border-border/50 hover:shadow-[var(--shadow-glow)]">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium text-muted-foreground">{title}</CardTitle>
-        <Icon className={`h-4 w-4 ${getColorClass()}`} />
+        <CardTitle className="text-xs font-medium text-muted-foreground/80 tracking-wide">{title}</CardTitle>
+        <div className="h-7 w-7 rounded-md bg-secondary/70 border border-border/50 flex items-center justify-center">
+          <Icon className={`h-4 w-4 ${getColorClass()}`} />
+        </div>
       </CardHeader>
       <CardContent>
-        <div className="text-3xl font-bold" style={gradient ? { background: gradient, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' } : {}}>
+        <div className="text-3xl font-extrabold leading-tight" style={gradient ? { background: gradient, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' } : {}}>
           {value}
-          {unit && <span className="text-lg ml-1">{unit}</span>}
+          {unit && <span className="text-lg ml-1 text-muted-foreground">{unit}</span>}
         </div>
       </CardContent>
     </Card>

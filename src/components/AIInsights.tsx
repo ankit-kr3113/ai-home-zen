@@ -9,7 +9,7 @@ interface AIInsightsProps {
 
 export const AIInsights = ({ logs }: AIInsightsProps) => {
   return (
-    <Card className="border-border/50 shadow-lg">
+    <Card className="border-border/50">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Brain className="h-5 w-5 text-primary" />
@@ -23,19 +23,21 @@ export const AIInsights = ({ logs }: AIInsightsProps) => {
               <p className="text-sm">Waiting for AI recommendations...</p>
             </div>
           ) : (
-            <div className="space-y-3">
-              {logs.map((log, index) => (
-                <div
-                  key={index}
-                  className="p-3 rounded-lg bg-secondary/50 border border-border/50 space-y-1 animate-in fade-in slide-in-from-bottom-2 duration-300"
-                >
-                  <p className="text-sm leading-relaxed">{log.message}</p>
-                  <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                    <Clock className="h-3 w-3" />
-                    {log.timestamp.toLocaleTimeString()}
+            <div className="relative ml-3 before:absolute before:left-0 before:top-0 before:h-full before:w-px before:bg-border/60">
+              <div className="space-y-3">
+                {logs.map((log, index) => (
+                  <div key={index} className="relative pl-4">
+                    <span className="absolute -left-1 top-2 h-2 w-2 rounded-full bg-primary shadow-[var(--shadow-glow)]" />
+                    <div className="p-3 rounded-lg bg-secondary/50 border border-border/50 space-y-1">
+                      <p className="text-sm leading-relaxed">{log.message}</p>
+                      <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                        <Clock className="h-3 w-3" />
+                        {log.timestamp.toLocaleTimeString()}
+                      </div>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           )}
         </ScrollArea>

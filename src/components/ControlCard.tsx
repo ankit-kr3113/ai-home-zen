@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
 import { LucideIcon } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 interface ControlCardProps {
   title: string;
@@ -25,11 +26,30 @@ export const ControlCard = ({
   onColorChange,
   disabled,
 }: ControlCardProps) => {
+  const [localColor, setLocalColor] = useState<string>(String(value || '#ffffff'));
+
+  useEffect(() => {
+    // keep local state in sync when parent updates value
+    if (typeof value === 'string' && value !== localColor) {
+      setLocalColor(value);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
+
+  const [localSpeed, setLocalSpeed] = useState<number>(typeof value === 'number' ? value : 0);
+
+  useEffect(() => {
+    if (typeof value === 'number' && value !== localSpeed) setLocalSpeed(value);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
+
   return (
-    <Card className="border-border/50 shadow-lg hover:shadow-xl transition-all duration-300">
+    <Card className="group border-border/50">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium text-muted-foreground">{title}</CardTitle>
-        <Icon className="h-4 w-4 text-primary" />
+        <CardTitle className="text-xs font-medium text-muted-foreground/80 tracking-wide">{title}</CardTitle>
+        <div className="h-7 w-7 rounded-md bg-secondary/70 border border-border/50 flex items-center justify-center">
+          <Icon className="h-4 w-4 text-primary" />
+        </div>
       </CardHeader>
       <CardContent className="space-y-4">
         {type === 'toggle' && (
@@ -46,11 +66,12 @@ export const ControlCard = ({
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
               <span>Speed</span>
-              <span className="font-semibold">{value}%</span>
+              <span className="font-semibold">{localSpeed}%</span>
             </div>
             <Slider
-              value={[value as number]}
-              onValueChange={onSliderChange}
+              value={[localSpeed]}
+              onValueChange={(v) => setLocalSpeed(v[0])}
+              onValueCommit={(v) => onSliderChange?.(v)}
               max={100}
               step={1}
               disabled={disabled}
@@ -60,14 +81,25 @@ export const ControlCard = ({
         )}
         {type === 'color' && (
           <div className="space-y-2">
-            <input
-              type="color"
-              value={value as string}
-              onChange={(e) => onColorChange?.(e.target.value)}
-              disabled={disabled}
-              className="w-full h-12 rounded-md cursor-pointer border-2 border-border hover:border-primary transition-colors"
-            />
-            <p className="text-xs text-center text-muted-foreground font-mono">{value}</p>
+            <div className="flex gap-2">
+              <input
+                type="color"
+                value={localColor}
+                onChange={(e) => setLocalColor(e.target.value)}
+                disabled={disabled}
+                className="h-12 w-full rounded-md cursor-pointer border border-border/60 bg-card/70 hover:border-primary transition-colors"
+              />
+              <Button
+                onClick={() => onColorChange?.(localColor)}
+                disabled={disabled}
+                variant="gradient"
+                size="sm"
+                className="min-w-[64px]"
+              >
+                Set
+              </Button>
+            </div>
+            <p className="text-xs text-center text-muted-foreground font-mono">{localColor}</p>
           </div>
         )}
       </CardContent>
