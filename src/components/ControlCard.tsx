@@ -1,0 +1,76 @@
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Slider } from '@/components/ui/slider';
+import { Switch } from '@/components/ui/switch';
+import { LucideIcon } from 'lucide-react';
+
+interface ControlCardProps {
+  title: string;
+  icon: LucideIcon;
+  type: 'toggle' | 'slider' | 'color';
+  value?: boolean | number | string;
+  onToggle?: (state: boolean) => void;
+  onSliderChange?: (value: number[]) => void;
+  onColorChange?: (color: string) => void;
+  disabled?: boolean;
+}
+
+export const ControlCard = ({
+  title,
+  icon: Icon,
+  type,
+  value,
+  onToggle,
+  onSliderChange,
+  onColorChange,
+  disabled,
+}: ControlCardProps) => {
+  return (
+    <Card className="border-border/50 shadow-lg hover:shadow-xl transition-all duration-300">
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <CardTitle className="text-sm font-medium text-muted-foreground">{title}</CardTitle>
+        <Icon className="h-4 w-4 text-primary" />
+      </CardHeader>
+      <CardContent className="space-y-4">
+        {type === 'toggle' && (
+          <div className="flex items-center justify-between">
+            <span className="text-lg font-semibold">{value ? 'ON' : 'OFF'}</span>
+            <Switch
+              checked={value as boolean}
+              onCheckedChange={onToggle}
+              disabled={disabled}
+            />
+          </div>
+        )}
+        {type === 'slider' && (
+          <div className="space-y-2">
+            <div className="flex justify-between text-sm">
+              <span>Speed</span>
+              <span className="font-semibold">{value}%</span>
+            </div>
+            <Slider
+              value={[value as number]}
+              onValueChange={onSliderChange}
+              max={100}
+              step={1}
+              disabled={disabled}
+              className="w-full"
+            />
+          </div>
+        )}
+        {type === 'color' && (
+          <div className="space-y-2">
+            <input
+              type="color"
+              value={value as string}
+              onChange={(e) => onColorChange?.(e.target.value)}
+              disabled={disabled}
+              className="w-full h-12 rounded-md cursor-pointer border-2 border-border hover:border-primary transition-colors"
+            />
+            <p className="text-xs text-center text-muted-foreground font-mono">{value}</p>
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
+};

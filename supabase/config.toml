@@ -1,0 +1,4 @@
+project_id = "vibbzpqhysmhhksncfru"
+
+[functions.ai-fan-control]
+verify_jwt = false
