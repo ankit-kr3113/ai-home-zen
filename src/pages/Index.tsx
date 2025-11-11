@@ -10,7 +10,7 @@ import { AlertBanner } from '@/components/AlertBanner';
 import { ConnectionStatus } from '@/components/ConnectionStatus';
 import { Button } from '@/components/ui/button';
 import { Thermometer, Droplets, Lightbulb, Fan, Palette, Cpu, Eye, BarChart3, Settings as SettingsIcon } from 'lucide-react';
-import { ThemeToggle } from '@/components/ThemeToggle';
+// import { ThemeToggle } from '@/components/ThemeToggle';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { Link } from 'react-router-dom';
