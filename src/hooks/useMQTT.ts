@@ -53,6 +53,7 @@ const INITIAL_SENSOR: SensorData = {
 const shared: SharedState = {
   client: null,
   isConnected: false,
+  connectionReason: null,
   sensorData: { ...INITIAL_SENSOR },
   alerts: [],
   aiLogs: [],
