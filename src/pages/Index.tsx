@@ -112,7 +112,7 @@ const Index = () => {
             <p className="text-muted-foreground mt-1">IoT Dashboard with AI Automation</p>
           </div>
           <div className="flex items-center gap-2">
-            <ConnectionStatus isConnected={isConnected} />
+            <ConnectionStatus isConnected={isConnected} reason={connectionReason} />
             <Link to="/analytics">
               <Button variant="outline" size="sm" className="gap-2">
                 <BarChart3 className="h-4 w-4" />
