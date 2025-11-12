@@ -30,6 +30,7 @@ const BASE_TOPIC = 'yuvraj/home';
 type SharedState = {
   client: MqttClient | null;
   isConnected: boolean;
+  connectionReason?: string | null;
   sensorData: SensorData;
   alerts: AlertData[];
   aiLogs: AILog[];
