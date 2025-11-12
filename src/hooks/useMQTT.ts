@@ -129,6 +129,7 @@ const ensureClient = () => {
   const handleConnect = () => {
     console.log('Connected to MQTT broker (singleton)');
     shared.isConnected = true;
+    shared.connectionReason = null;
     toast.success('Connected to Smart Home');
 
     // Subscribe safely
