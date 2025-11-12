@@ -45,27 +45,44 @@ export const useMQTT = () => {
   const [humidityHistory, setHumidityHistory] = useState<{ time: string; value: number }[]>([]);
 
   useEffect(() => {
-    const mqttClient = mqtt.connect(BROKER_URL);
+    // Enable automatic reconnects and set a sensible timeout
+    const mqttClient = mqtt.connect(BROKER_URL, { reconnectPeriod: 2000, connectTimeout: 30000 });
 
-    mqttClient.on('connect', () => {
+    const handleConnect = () => {
       console.log('Connected to MQTT broker');
       setIsConnected(true);
       toast.success('Connected to Smart Home');
 
-      // Subscribe to all topics
-      mqttClient.subscribe([
-        `${BASE_TOPIC}/temp`,
-        `${BASE_TOPIC}/hum`,
-        `${BASE_TOPIC}/bulb`,
-        `${BASE_TOPIC}/fan`,
-        `${BASE_TOPIC}/fan/speed`,
-        `${BASE_TOPIC}/color`,
-        `${BASE_TOPIC}/mode`,
-        `${BASE_TOPIC}/motion`,
-        `${BASE_TOPIC}/alert`,
-        `${BASE_TOPIC}/ai/log`,
-      ]);
-    });
+      // Subscribe to all topics (guard against subscribing while disconnecting)
+      try {
+        if (!mqttClient.disconnecting && mqttClient.connected) {
+          mqttClient.subscribe([
+            `${BASE_TOPIC}/temp`,
+            `${BASE_TOPIC}/hum`,
+            `${BASE_TOPIC}/bulb`,
+            `${BASE_TOPIC}/fan`,
+            `${BASE_TOPIC}/fan/speed`,
+            `${BASE_TOPIC}/color`,
+            `${BASE_TOPIC}/mode`,
+            `${BASE_TOPIC}/motion`,
+            `${BASE_TOPIC}/alert`,
+            `${BASE_TOPIC}/ai/log`,
+          ], (err, granted) => {
+            if (err) {
+              console.error('Subscribe error:', err);
+            } else {
+              console.log('Subscribed to topics:', granted.map(g => g.topic).join(', '));
+            }
+          });
+        } else {
+          console.warn('Skipped subscribing because client is disconnecting or not fully connected');
+        }
+      } catch (err) {
+        console.error('Error during subscribe:', err);
+      }
+    };
+
+    mqttClient.on('connect', handleConnect);
 
     mqttClient.on('message', (topic, message) => {
       const payload = message.toString();
