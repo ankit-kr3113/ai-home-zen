@@ -233,7 +233,8 @@ export const useMQTT = () => {
   const [state, setState] = useState<SharedState>(() => ({ ...shared }));
 
   useEffect(() => {
-    // Ensure singleton client exists once any component uses the hook
+      // Ensure singleton client exists once any component uses the hook
+    clearScheduledDisconnect();
     ensureClient();
 
     const subscriber = (s: SharedState) => setState({ ...s });
@@ -244,7 +245,11 @@ export const useMQTT = () => {
 
     return () => {
       subscribers.delete(subscriber);
-      // Do NOT destroy shared client here - it should live until page close
+      // If no more subscribers, schedule disconnect after 1 minute
+      if (subscribers.size === 0) {
+        scheduleDisconnect(60000);
+      }
+      // Do NOT destroy shared client immediately here - allow idle timeout
     };
   }, []);
 
