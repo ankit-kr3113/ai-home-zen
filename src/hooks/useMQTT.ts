@@ -72,6 +72,46 @@ const notify = () => {
 };
 
 let initializing = false;
+let idleTimer: ReturnType<typeof setTimeout> | null = null;
+
+const clearScheduledDisconnect = () => {
+  if (idleTimer) {
+    clearTimeout(idleTimer);
+    idleTimer = null;
+    // console.log('Cleared scheduled MQTT disconnect');
+  }
+};
+
+const scheduleDisconnect = (ms = 60000) => {
+  clearScheduledDisconnect();
+  idleTimer = setTimeout(() => {
+    try {
+      const client = shared.client;
+      if (client) {
+        console.log('No subscribers - closing MQTT client due to inactivity');
+        try {
+          client.removeAllListeners();
+        } catch (e) {
+          console.warn('Error removing listeners before end', e);
+        }
+        try {
+          // force close
+          client.end(true);
+        } catch (e) {
+          try { client.end(); } catch (e2) { /* ignore */ }
+        }
+      }
+    } catch (err) {
+      console.error('Error during scheduled MQTT disconnect:', err);
+    } finally {
+      shared.client = null;
+      shared.isConnected = false;
+      // reset shared data? keep last known sensor values
+      notify();
+      idleTimer = null;
+    }
+  }, ms);
+};
 
 const ensureClient = () => {
   if (shared.client) return shared.client;
