@@ -94,11 +94,11 @@ export const ControlCard = ({
           <div className="space-y-3">
             <div className="flex justify-between items-center">
               <span className="text-sm font-medium text-muted-foreground/80">Speed Control</span>
-              <span className="text-2xl font-bold bg-clip-text text-transparent" style={{ backgroundImage: 'var(--gradient-primary)' }}>{localSpeed}%</span>
+              <span className="text-2xl font-bold bg-clip-text text-transparent transition-all duration-150" style={{ backgroundImage: 'var(--gradient-primary)' }}>{optimisticSliderValue}%</span>
             </div>
             <Slider
-              value={[localSpeed]}
-              onValueChange={(v) => setLocalSpeed(v[0])}
+              value={[optimisticSliderValue]}
+              onValueChange={handleSliderChange}
               onValueCommit={(v) => onSliderChange?.(v)}
               max={100}
               step={1}
