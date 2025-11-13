@@ -111,22 +111,22 @@ const Index = () => {
             </h1>
             <p className="text-base text-muted-foreground/80 font-medium">Real-time IoT Dashboard with AI Automation</p>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <ConnectionStatus isConnected={isConnected} reason={connectionReason} />
             <Link to="/analytics">
-              <Button variant="outline" size="sm" className="gap-2">
+              <Button variant="outline" size="sm" className="gap-2 font-medium">
                 <BarChart3 className="h-4 w-4" />
                 <span className="hidden md:inline">Analytics</span>
               </Button>
             </Link>
             <Link to="/ai">
-              <Button variant="outline" size="sm" className="gap-2">
+              <Button variant="outline" size="sm" className="gap-2 font-medium">
                 <Brain className="h-4 w-4" />
                 <span className="hidden md:inline">AI</span>
               </Button>
             </Link>
             <Link to="/settings">
-              <Button variant="outline" size="sm" className="gap-2">
+              <Button variant="outline" size="sm" className="gap-2 font-medium">
                 <SettingsIcon className="h-4 w-4" />
                 <span className="hidden md:inline">Settings</span>
               </Button>
@@ -136,7 +136,7 @@ const Index = () => {
               onClick={toggleMode}
               disabled={!isConnected}
               size="sm"
-              className="gap-2"
+              className="gap-2 font-medium"
             >
               <Cpu className="h-4 w-4" />
               <span className="hidden md:inline">{sensorData.mode} MODE</span>
