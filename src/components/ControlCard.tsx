@@ -96,7 +96,7 @@ export const ControlCard = ({
             </div>
             <Slider
               value={[optimisticSliderValue]}
-              onValueChange={handleSliderChange}
+              onValueChange={handleSliderDrag}
               onValueCommit={(v) => onSliderChange?.(v)}
               max={100}
               step={1}
