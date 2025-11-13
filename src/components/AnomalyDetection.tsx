@@ -73,24 +73,27 @@ export const AnomalyDetection = () => {
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <div>
-            <CardTitle className="flex items-center gap-2">
-              <Brain className="h-5 w-5" />
+    <Card className="relative overflow-hidden">
+      <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-bl from-accent/10 to-transparent rounded-full -mr-24 -mt-24 pointer-events-none" />
+      <CardHeader className="relative z-10 border-b border-border/30">
+        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+          <div className="space-y-2">
+            <CardTitle className="flex items-center gap-3 text-xl">
+              <div className="p-2 bg-accent/20 border border-accent/40 rounded-lg">
+                <Brain className="h-5 w-5 text-accent" />
+              </div>
               AI Anomaly Detection
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="text-sm text-muted-foreground/80">
               Analyze sensor patterns and detect unusual behavior
             </CardDescription>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-3">
             <Select value={timeFrame} onValueChange={setTimeFrame}>
-              <SelectTrigger className="w-[140px]">
+              <SelectTrigger className="w-[160px] rounded-lg">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="rounded-lg">
                 <SelectItem value="1h">Last Hour</SelectItem>
                 <SelectItem value="24h">Last 24 Hours</SelectItem>
                 <SelectItem value="7d">Last 7 Days</SelectItem>
@@ -98,7 +101,7 @@ export const AnomalyDetection = () => {
                 <SelectItem value="all">All Time</SelectItem>
               </SelectContent>
             </Select>
-            <Button onClick={runAnalysis} disabled={loading} className="gap-2">
+            <Button onClick={runAnalysis} disabled={loading} className="gap-2 font-semibold">
               {loading ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" />
