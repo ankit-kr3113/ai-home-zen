@@ -56,15 +56,13 @@ export const ControlCard = ({
   const handleToggle = (newState: boolean) => {
     // Optimistic update - update UI immediately
     setOptimisticToggleValue(newState);
-    // Then call the actual handler
+    // Then call the actual handler (this sends MQTT command)
     onToggle?.(newState);
   };
 
-  const handleSliderChange = (v: number[]) => {
-    // Optimistic update for visual feedback
+  const handleSliderDrag = (v: number[]) => {
+    // Update optimistic value during drag for instant visual feedback
     setOptimisticSliderValue(v[0]);
-    // Then call the actual handler on commit
-    onSliderChange?.(v);
   };
 
   return (
