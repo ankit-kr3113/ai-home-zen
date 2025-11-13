@@ -44,14 +44,15 @@ export const ControlCard = ({
   }, [value]);
 
   return (
-    <Card className="group border-border/50">
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-xs font-medium text-muted-foreground/80 tracking-wide">{title}</CardTitle>
-        <div className="h-7 w-7 rounded-md bg-secondary/70 border border-border/50 flex items-center justify-center">
-          <Icon className="h-4 w-4 text-primary" />
+    <Card className="group relative overflow-hidden">
+      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-accent/10 to-transparent rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-500" />
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 relative z-10">
+        <CardTitle className="text-sm font-medium text-muted-foreground/90 tracking-wide uppercase">{title}</CardTitle>
+        <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-accent/20 to-accent/10 border border-accent/30 flex items-center justify-center group-hover:from-accent/30 group-hover:to-accent/20 transition-colors">
+          <Icon className="h-5 w-5 text-accent" />
         </div>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-4 relative z-10">
         {type === 'toggle' && (
           <div className="flex items-center justify-between">
             <span className="text-lg font-semibold">{value ? 'ON' : 'OFF'}</span>
