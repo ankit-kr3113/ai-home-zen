@@ -117,22 +117,22 @@ export const AnomalyDetection = () => {
           </div>
         </div>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-6 relative z-10 py-6">
         {result && (
           <>
             {/* Statistics */}
-            <div className="grid grid-cols-3 gap-4 p-4 bg-muted rounded-lg">
-              <div>
-                <p className="text-sm text-muted-foreground">Avg Temperature</p>
-                <p className="text-2xl font-bold">{result.statistics.avgTemp}°C</p>
+            <div className="grid grid-cols-3 gap-4 p-5 bg-gradient-to-br from-secondary/50 to-secondary/30 rounded-xl border border-border/40 backdrop-blur">
+              <div className="space-y-1">
+                <p className="text-xs font-medium text-muted-foreground/80 uppercase tracking-wide">Avg Temperature</p>
+                <p className="text-3xl font-bold bg-clip-text text-transparent" style={{ backgroundImage: 'var(--gradient-warm)' }}>{result.statistics.avgTemp}°C</p>
               </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Avg Humidity</p>
-                <p className="text-2xl font-bold">{result.statistics.avgHum}%</p>
+              <div className="space-y-1">
+                <p className="text-xs font-medium text-muted-foreground/80 uppercase tracking-wide">Avg Humidity</p>
+                <p className="text-3xl font-bold bg-clip-text text-transparent" style={{ backgroundImage: 'var(--gradient-cool)' }}>{result.statistics.avgHum}%</p>
               </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Data Points</p>
-                <p className="text-2xl font-bold">{result.statistics.dataPoints}</p>
+              <div className="space-y-1">
+                <p className="text-xs font-medium text-muted-foreground/80 uppercase tracking-wide">Data Points</p>
+                <p className="text-3xl font-bold text-primary">{result.statistics.dataPoints}</p>
               </div>
             </div>
 
