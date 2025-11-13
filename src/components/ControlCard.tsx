@@ -79,12 +79,12 @@ export const ControlCard = ({
       <CardContent className="space-y-4 relative z-10">
         {type === 'toggle' && (
           <div className="flex items-center justify-between py-2">
-            <span className="text-lg font-bold bg-clip-text text-transparent" style={{ backgroundImage: value ? 'var(--gradient-primary)' : 'linear-gradient(to right, var(--muted-foreground), var(--muted-foreground))' }}>
-              {value ? 'ON' : 'OFF'}
+            <span className="text-lg font-bold bg-clip-text text-transparent transition-all duration-150" style={{ backgroundImage: optimisticToggleValue ? 'var(--gradient-primary)' : 'linear-gradient(to right, var(--muted-foreground), var(--muted-foreground))' }}>
+              {optimisticToggleValue ? 'ON' : 'OFF'}
             </span>
             <Switch
-              checked={value as boolean}
-              onCheckedChange={onToggle}
+              checked={optimisticToggleValue}
+              onCheckedChange={handleToggle}
               disabled={disabled}
               className="scale-125"
             />
