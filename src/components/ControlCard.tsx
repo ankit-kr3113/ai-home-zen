@@ -54,20 +54,23 @@ export const ControlCard = ({
       </CardHeader>
       <CardContent className="space-y-4 relative z-10">
         {type === 'toggle' && (
-          <div className="flex items-center justify-between">
-            <span className="text-lg font-semibold">{value ? 'ON' : 'OFF'}</span>
+          <div className="flex items-center justify-between py-2">
+            <span className="text-lg font-bold bg-clip-text text-transparent" style={{ backgroundImage: value ? 'var(--gradient-primary)' : 'linear-gradient(to right, var(--muted-foreground), var(--muted-foreground))' }}>
+              {value ? 'ON' : 'OFF'}
+            </span>
             <Switch
               checked={value as boolean}
               onCheckedChange={onToggle}
               disabled={disabled}
+              className="scale-125"
             />
           </div>
         )}
         {type === 'slider' && (
-          <div className="space-y-2">
-            <div className="flex justify-between text-sm">
-              <span>Speed</span>
-              <span className="font-semibold">{localSpeed}%</span>
+          <div className="space-y-3">
+            <div className="flex justify-between items-center">
+              <span className="text-sm font-medium text-muted-foreground/80">Speed Control</span>
+              <span className="text-2xl font-bold bg-clip-text text-transparent" style={{ backgroundImage: 'var(--gradient-primary)' }}>{localSpeed}%</span>
             </div>
             <Slider
               value={[localSpeed]}
